@@ -5,7 +5,7 @@
  */
 
 // SPAでクライアントサイドでルーティングする場合はこちらにパスを追加
-const clientRoutes = ["/search/*"]
+const clientRoutes = ["/example/*"]
 
 module.exports = {
   // pathPrefix: `/path`, github pagesなどを利用する場合はこちらにルートパスを指定

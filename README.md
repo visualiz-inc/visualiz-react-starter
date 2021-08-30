@@ -18,12 +18,12 @@
 
 ### インストール方法
 
-まずは[公式ページ](https://www.gatsbyjs.com/Gatsby-Monogram.svg)からGatsby CLIをインストールしてください。
+まずは[公式ページ](https://www.gatsbyjs.com/)からGatsby CLIをインストールしてください。
 
 プロジェクトを作成したいディレクトリで以下のコマンドを実行するとプロジェクトのテンプレートができます。
 
 ```
-$ gatsby new [プロジェクト名] https://github.com/visualiz-inc/gatsby-material-theme.git
+$ gatsby new [プロジェクト名] https://github.com/visualiz-inc/visualiz-react-starter.git
 ```
 
 ### プロジェクトディレクトリ構成

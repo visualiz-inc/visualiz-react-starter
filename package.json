@@ -37,12 +37,5 @@
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "gatsby-plugin-sass": "^4.12.0",
     "prettier": "^2.3.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }

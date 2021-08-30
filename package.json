@@ -1,0 +1,47 @@
+{
+  "name": "gatsby-material-theme",
+  "private": true,
+  "description": "Material UI and typescript starter on SPA for Gatsby",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "start": "gatsby develop",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@types/node": "^16.7.6",
+    "@types/react": "17.0.19",
+    "@types/react-dom": "17.0.9",
+    "gatsby": "^3.7.1",
+    "gatsby-link": "^3.7.1",
+    "gatsby-plugin-create-client-paths": "^3.7.1",
+    "gatsby-plugin-material-ui": "^3.0.1",
+    "gatsby-plugin-react-helmet": "^4.7.1",
+    "gatsby-plugin-typescript": "^3.7.1",
+    "i18next": "^20.3.1",
+    "normalize.css": "^8.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
+    "react-i18next": "^11.11.0",
+    "react-relux": "^2.0.0",
+    "relux.js": "^2.0.2"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-proposal-decorators": "^7.14.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
+    "prettier": "^2.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  }
+}

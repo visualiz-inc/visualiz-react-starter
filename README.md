@@ -86,12 +86,12 @@ src/pages/name.tsx
 
 ディレクトリをネストさせることもできます。
 ```
-pages/aaa/bbb/ccc.tsx (```https://example.com/aaa/bbb/ccc```)
+pages/aaa/bbb/ccc.tsx (https://example.com/aaa/bbb/ccc)
 ```
 
 ファイルをindex.tsxにするとディレクトリ名でのアクセスもできます。
 ```
-pages/aaa/bbb/index.tsx (```https://example.com/aaa/bbb```)
+pages/aaa/bbb/index.tsx (https://example.com/aaa/bbb)
 ```
 
 ページを表示させるために必要な最低限のルールは以下の通りです

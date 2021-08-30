@@ -1,6 +1,6 @@
 import { createMuiTheme, ThemeOptions } from "@material-ui/core/styles";
 import { cyan, grey, orange } from "@material-ui/core/colors";
-import { mergeDeeply } from "../Utils/DeepMerge"
+import { mergeDeeply } from "../Libs/Utils/DeepMerge"
 
 const main = "#67bb89";
 const dark = "#67bb89";

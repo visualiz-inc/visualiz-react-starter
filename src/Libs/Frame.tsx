@@ -252,56 +252,55 @@ function NavigationList(props: DrawerPropos) {
     );
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            display: "flex",
-            overflow: "hidden"
-        },
-        drawer: {
-            [theme.breakpoints.up("sm")]: {
-                width: drawerWidth,
-                flexShrink: 0,
-            },
-            transition: theme.transitions.create(["width"], {
-                easing: theme.transitions.easing.easeInOut,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        },
-        appBar: {
-            zIndex: 9999,
-        },
-        toolbar: {
-            marginRight: "12px",
-            marginLeft: "12px",
-            height: 60
-        },
-        drawerPaperOpen: {
-            overflow: "auto",
+const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+        display: "flex",
+        overflow: "hidden"
+    },
+    drawer: {
+        [theme.breakpoints.up("sm")]: {
             width: drawerWidth,
-            border: 0,
-            transition: theme.transitions.create(["width"], {
-                easing: theme.transitions.easing.easeInOut,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
+            flexShrink: 0,
         },
-        drawerPaperClose: {
-            overflow: "auto",
-            width: closeWidth,
-            border: 0,
-            transition: theme.transitions.create(["width"], {
-                easing: theme.transitions.easing.easeInOut,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        },
-        content: {
-            flexGrow: 1,
-            padding: theme.spacing(0),
-            width: `calc(100vw - ${drawerWidth}px)`,
-        },
-        mainContainer: {
-            height: "calc(100vh - 64px)",
-            overflow: "hidden"
-        }
-    }),
+        transition: theme.transitions.create(["width"], {
+            easing: theme.transitions.easing.easeInOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    appBar: {
+        zIndex: 9999,
+    },
+    toolbar: {
+        marginRight: "12px",
+        marginLeft: "12px",
+        height: 60
+    },
+    drawerPaperOpen: {
+        overflow: "auto",
+        width: drawerWidth,
+        border: 0,
+        transition: theme.transitions.create(["width"], {
+            easing: theme.transitions.easing.easeInOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    drawerPaperClose: {
+        overflow: "auto",
+        width: closeWidth,
+        border: 0,
+        transition: theme.transitions.create(["width"], {
+            easing: theme.transitions.easing.easeInOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing(0),
+        width: `calc(100vw - ${drawerWidth}px)`,
+    },
+    mainContainer: {
+        height: "calc(100vh - 64px)",
+        overflow: "hidden"
+    }
+}),
 );

@@ -7,7 +7,10 @@
         "module": "commonjs",
         "target": "esnext",
         "jsx": "react",
-        "lib": ["dom", "es2015", "es2017"]
+        "lib": ["dom", "es2015", "es2017"],
+        "moduleResolution": "node",
+        "noResolve": false,
+        "esModuleInterop":true
     },
     "include": [
         "./src/**/*"

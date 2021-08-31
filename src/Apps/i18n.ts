@@ -6,6 +6,9 @@ i18n.use(initReactI18next).init({
         en: {
         },
         ja: {
+            translation: {
+                "Lazy Page routing": "遅延ロードページです"
+            }
         },
     },
     lng: "ja",

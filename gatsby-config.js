@@ -5,7 +5,7 @@
  */
 
 // SPAでクライアントサイドでルーティングする場合はこちらにパスを追加
-const clientRoutes = ["/example/*"];
+const clientRoutes = ["/app/*"];
 
 module.exports = {
   // pathPrefix: `/path`, github pagesなどを利用する場合はこちらにルートパスを指定
@@ -13,6 +13,7 @@ module.exports = {
     title: "",
   },
   plugins: [
+    `gatsby-plugin-resolve-src`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-typescript`,
     `gatsby-plugin-material-ui`,

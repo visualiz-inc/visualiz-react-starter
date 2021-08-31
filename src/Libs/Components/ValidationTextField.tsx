@@ -7,7 +7,7 @@ interface ValidationTextFieldProps {
     required?: boolean;
     errorText?: string;
     textChanged?: (e: { value: string, valid: boolean }) => void;
-};
+}
 
 export function ValidationTextField(props: ValidationTextFieldProps & TextFieldProps) {
     const [isError, setIsError] = useState(false);

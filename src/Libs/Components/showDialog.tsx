@@ -8,12 +8,11 @@ import {
     Typography,
     DialogActions,
     Box,
-    Divider
 } from "@material-ui/core";
-import { makeStyles, Theme, createStyles, ThemeProvider, useTheme, createMuiTheme } from "@material-ui/core/styles";
+import { Theme, ThemeProvider, useTheme, createMuiTheme } from "@material-ui/core/styles";
 import { Spacer } from "./Spacer";
 
-interface DialogProp<T = any, U = any> {
+interface DialogProp<T = unknown, U = unknown> {
     onClose: (value: U) => void;
     context: T;
     content: (props: DialogContentProp<T, U>) => React.ReactElement;
@@ -65,7 +64,7 @@ function DialogBase<T, U>(props: DialogProp<T, U>) {
 export interface DialogContentProp<T, U> {
     onClose: (value: U) => void;
     context: T;
-    forwardRef?: any;
+    forwardRef?: unknown;
 }
 
 interface DialogOption {

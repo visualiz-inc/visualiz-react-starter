@@ -23,4 +23,4 @@ export const Loading = () => {
             margin: "auto"
         }} size={100} />
     </div>;
-}
+};

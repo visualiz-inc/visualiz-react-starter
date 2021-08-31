@@ -1,4 +1,3 @@
-<!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <p align="center">
   <a href="https://www.gatsbyjs.com">
     <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="80" />
@@ -40,6 +39,7 @@ $ gatsby new [プロジェクト名] https://github.com/visualiz-inc/visualiz-re
     ├─App クライアントサイドアプリケーション（SPA）
     │      index.tsx クライアントサイドアプリケーションのエントリーポイント
     │      theme.ts Material UI のテーマ設定を記述します
+    |      i18n.ts 多言語化を実現します
     │
     ├─Libs
     │  │  Frame.tsx ポータル画面のテンプレート（ヘッダー、サイドバー、メイン）
@@ -152,13 +152,17 @@ class以外であれば普通に指定できる
 
 ページごとにスタイルシートを記述するよりも、よく利用するブロックごと共通パーツ（コンポーネント）化させたり、あらかじめそういった便利なパーツを含むライブラリを利用することで、一貫性のある美しいUIを実現できたり、生産性を高めることができます。
 
-本プロジェクトは[Materia UI](https://material-ui.com/ja/)を利用することで、Googleのマテリアルデザインを実現しつつ、より効率的なスタイリングを行うことを選びました。詳しくは公式ページを参照してください。
+本プロジェクトはMateria UIを利用することで、Googleのマテリアルデザインを実現しつつ、より効率的なスタイリングを行うことを選びました。詳しくは公式ページを参照してください。
 
 InputやButton、レイアウト組などは積極的に利用していってください。
 
 Material UIはJavaScript(TypeScript)のコード内でスタイルを記述する仕組みを提供します。
 これによりcssよりも複雑なことを可能にしたり、管理をシンプルにすることができますので、こちらも積極的に利用してください。
-詳しくは[公式ページ](https://material-ui.com/styles/basics/)を参照。
+詳しくは公式のスタイルドキュメントを参照。
+
+[Materia UI　公式ドキュメント](https://material-ui.com/ja/)
+[Materia UI スタイルガイド](https://material-ui.com/styles/basics/)
+
 
 ```tsx
 import React from 'react';
@@ -171,7 +175,7 @@ const useStyles = makeStyles({
     borderRadius: 3,
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     color: "#ffffff",
-    height: 48px,
+    height: "48px",
     padding: "0 30px",
   },
 });
@@ -182,6 +186,47 @@ export default function Hook() {
 }
 ```
 
+# 多言語化対応
+
+[react i18n](https://react.i18next.com/)を利用することで多言語化も簡単に実現することができます。
+詳しくは公式を参照してください。
+
+
+##### 言語リソースを定義
+```ts
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+
+i18n.use(initReactI18next).init({
+    resources: {
+        en: {
+          "text1": "Hello, World !"
+        },
+        ja: {
+          "text1": "こんにちは、世界！"
+        },
+    },
+    lng: "ja",
+    fallbackLng: "ja",
+    interpolation: { escapeValue: false },
+});
+```
+
+##### 言語リソースを利用
+```tsx
+import React from "react";
+import { useTranslation } from "react-i18next";
+
+export const ReactComponent = () => {
+    const {t} = useTranslation();
+    return (
+      <div>
+          {t("text1")}
+      </div>
+    );
+}
+
+```
 
 
 

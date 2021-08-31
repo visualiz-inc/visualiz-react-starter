@@ -5,7 +5,7 @@ const useStyles = makeStyles({
     spacer: {
         flex: "1 1 auto"
     }
-})
+});
 
 export function Spacer() {
     const classes = useStyles();

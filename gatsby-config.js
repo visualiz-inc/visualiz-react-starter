@@ -5,7 +5,7 @@
  */
 
 // SPAでクライアントサイドでルーティングする場合はこちらにパスを追加
-const clientRoutes = ["/example/*"]
+const clientRoutes = ["/example/*"];
 
 module.exports = {
   // pathPrefix: `/path`, github pagesなどを利用する場合はこちらにルートパスを指定
@@ -21,5 +21,14 @@ module.exports = {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [...clientRoutes] },
     },
+    {
+      resolve: "gatsby-plugin-eslint",
+      options: {
+        // Default settings that may be ommitted or customized
+        stages: ["develop"],
+        extensions: ["js", "jsx", "ts", "tsx"],
+        exclude: ["node_modules", ".cache", "public"],
+      },
+    },
   ],
-}
+};

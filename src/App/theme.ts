@@ -1,6 +1,5 @@
-import { createMuiTheme, ThemeOptions } from "@material-ui/core/styles";
-import { cyan, grey, orange } from "@material-ui/core/colors";
-import { mergeDeeply } from "../Libs/Utils/DeepMerge"
+import { createTheme, ThemeOptions } from "@material-ui/core/styles";
+import { mergeDeeply } from "../Libs/Utils/DeepMerge";
 
 const main = "#67bb89";
 const dark = "#67bb89";
@@ -87,7 +86,7 @@ const common: ThemeOptions = {
 };
 
 const darkOption: ThemeOptions = {
-}
+};
 
 const lightOption: ThemeOptions = {
     palette: {
@@ -96,8 +95,8 @@ const lightOption: ThemeOptions = {
             paper: "rgb(255,255,255)"
         }
     },
-}
+};
 
-export const darkTheme = createMuiTheme({ ...common, ...darkOption });
-export const lightTheme = createMuiTheme(mergeDeeply(common, lightOption))
+export const darkTheme = createTheme(mergeDeeply(common, darkOption));
+export const lightTheme = createTheme(mergeDeeply(common, lightOption));
 

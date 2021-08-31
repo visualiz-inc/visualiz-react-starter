@@ -1,8 +1,8 @@
-import React, { Suspense, useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { makeStyles, useTheme, Theme, createStyles } from "@material-ui/core/styles";
-import { fromEvent, timer, from } from "rxjs";
-import { pairwise, map, concatMap } from "rxjs/operators";
+import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
+import { fromEvent } from "rxjs";
+import { pairwise, map } from "rxjs/operators";
 import MenuIcon from "@material-ui/icons/Menu";
 import {
     Box,
@@ -10,13 +10,10 @@ import {
     ListItemIcon,
     ListItem,
     List,
-    Icon,
     IconButton,
     Typography,
     Hidden,
     Drawer,
-    Toolbar,
-    Divider, Avatar
 } from "@material-ui/core";
 import { useLocation } from "@reach/router";
 import { useTranslation } from "react-i18next";
@@ -34,12 +31,9 @@ interface FrameProps {
     children: React.ReactNode;
 }
 
-export function Frame(props: FrameProps) {
+export const Frame = (props: FrameProps) => {
     const classes = useStyles();
     const [mobileOpen, setMobileOpen] = React.useState(AUTO_CLOSE_WIDTH <= window.innerWidth);
-    const [isLoading, setIsLoading] = useState(false);
-    const theme = useTheme();
-    const opacityAnimationElement = useRef<HTMLDivElement | null>(null);
     const [t] = useTranslation();
 
 
@@ -48,7 +42,7 @@ export function Frame(props: FrameProps) {
     };
 
     fromEvent(window, "resize").pipe(
-        map(e => window.innerWidth),
+        map(() => window.innerWidth),
         pairwise(),
     ).subscribe(e => {
         const [beforeWidth, currentWidth] = e;
@@ -150,7 +144,7 @@ export function Frame(props: FrameProps) {
             </main>
         </div >
     );
-}
+};
 
 export interface Route {
     path: string;
@@ -175,8 +169,8 @@ function NavigationList(props: DrawerPropos) {
     const [currentElement, setCurrentElement] = useState<HTMLDivElement | null>(null);
 
     const isCurrentRoute = (path: string) => {
-        return path.includes(lastPeressed) || lastPeressed.includes(path);;
-    }
+        return path.includes(lastPeressed) || lastPeressed.includes(path);
+    };
 
     const routePressed = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, route: Route) => {
         props.routePressed(route);

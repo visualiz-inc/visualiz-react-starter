@@ -1,29 +1,18 @@
-import React, { useState } from "react";
-import { Box, CssBaseline, Divider, Grow, LinearProgress, ThemeProvider, Toolbar } from "@material-ui/core";
+import React from "react";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { lightTheme } from "./theme";
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-i18n.use(initReactI18next).init({
-    resources: {
-        en: {
-        },
-        ja: {
-        },
-    },
-    lng: 'ja',
-    fallbackLng: 'ja',
-    interpolation: { escapeValue: false },
-});
+import "./i18n";
 
 export const App = () => {
-
+    const { t } = useTranslation();
     return (
         <ThemeProvider theme={lightTheme}>
             <CssBaseline />
-            < div >
-                Hello
+            <div>
+                {t("text1")}
             </div>
         </ThemeProvider>
     );
-}
+};

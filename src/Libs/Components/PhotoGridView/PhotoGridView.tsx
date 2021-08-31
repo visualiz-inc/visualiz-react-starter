@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Paper, InputBase, Button, makeStyles, Checkbox, useTheme, ButtonBase } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { makeStyles, Checkbox, useTheme } from "@material-ui/core";
 
 interface PhotoGridViewProps {
     images: string[];
@@ -137,7 +137,7 @@ export function PhotoGridView(props: PhotoGridViewProps) {
     );
 }
 
-const useStyle = makeStyles(theme => ({
+const useStyle = makeStyles(() => ({
     checkbox: {
         position: "absolute",
         top: "0px",

@@ -1,7 +1,7 @@
 import React from "react";
 import { showDialogAsync, DialogContentProp } from "./showDialog";
 import { Box, Typography, Button, useTheme } from "@material-ui/core";
-import { lightTheme } from "../../App/theme";
+import { lightTheme } from "../../Apps/theme";
 
 /**
  * Dialog that can confirm Ok or Cancel.

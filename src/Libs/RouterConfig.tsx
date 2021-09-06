@@ -1,15 +1,17 @@
-import React, { ReactNode, useState } from "react";
-import { Router, useLocation } from "@reach/router";
+import React, { forwardRef, ReactNode, ReactNodeArray, useState } from "react";
+import { Router, useLocation, navigate, Redirect } from "@reach/router";
 
 export {
     Route,
     ChildRoute,
     RouterConfig,
     useAppLocation,
-    AppRouter
+    useAppNavigate,
+    AppRouterProvider
 };
 
 const useAppLocation = () => useLocation();
+const useAppNavigate = () => navigate;
 
 interface Route {
     path: string;
@@ -31,6 +33,7 @@ interface ChildRoute {
 
 interface RouterConfig {
     basepath: string;
+    homepath: string;
     routes: Route[];
 }
 
@@ -38,35 +41,34 @@ interface AppRouterProps {
     config: RouterConfig;
 }
 
-type LazyComponent=Promise<{
+type LazyComponent = Promise<{
     default: React.ComponentType<any>;
 }>;
 
-const AppRouter = ({ config }: AppRouterProps) => {
+const AppRouterProvider = ({ config }: AppRouterProps) => {
     const { basepath, routes } = config;
     return (
         <React.Suspense fallback={<div>...Loading</div>}>
-            <Router basepath={basepath}>
+            <Router basepath={basepath} style={{height:"100%"}}>
                 {
                     routes
-                        .map(route => <ProjectRoute
+                        .map(route => <ProjectRouteLazy
                             key={route.path}
                             path={route.path}
                             page={React.lazy(() => route.component())}
                         />)
                 }
-
             </Router >
         </React.Suspense>
     );
 };
 
-interface PageProps {
+interface PageLazyProps {
     page: React.LazyExoticComponent<React.ComponentType<any>>;
     path: string;
 }
 
-const ProjectRoute = (props: PageProps) => {
+const ProjectRouteLazy = (props: PageLazyProps) => {
     return (
         <>
             <props.page />

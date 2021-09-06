@@ -1,8 +1,9 @@
 import React from "react";
-import { AppRouter, RouterConfig } from "Libs/RouterConfig";
+import { RouterConfig } from "Libs/RouterConfig";
 
 export const routes: RouterConfig = {
     basepath: "/app",
+    homepath: "/app",
     routes: [
         {
             component:() => import("./Views/TestPage"),

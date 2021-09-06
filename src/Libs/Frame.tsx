@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
 import { fromEvent } from "rxjs";
 import { pairwise, map } from "rxjs/operators";
@@ -17,10 +16,11 @@ import {
 } from "@material-ui/core";
 import { useLocation } from "@reach/router";
 import { useTranslation } from "react-i18next";
+import { Route } from "./RouterConfig";
 
 const closeWidth = 52;
 const drawerWidth = 320;
-const AUTO_CLOSE_WIDTH = 960;
+const AUTO_CLOSE_WIDTH = 1280;
 
 interface FrameProps {
     menus?: Route[];
@@ -36,6 +36,8 @@ export const Frame = (props: FrameProps) => {
     const [mobileOpen, setMobileOpen] = React.useState(AUTO_CLOSE_WIDTH <= window.innerWidth);
     const [t] = useTranslation();
 
+    const theme = useTheme();
+
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -47,7 +49,7 @@ export const Frame = (props: FrameProps) => {
     ).subscribe(e => {
         const [beforeWidth, currentWidth] = e;
 
-        if (AUTO_CLOSE_WIDTH < currentWidth) {
+        if (theme.breakpoints.values["lg"] < currentWidth) {
             if (beforeWidth < currentWidth) {
                 setMobileOpen(true);
             }
@@ -65,7 +67,6 @@ export const Frame = (props: FrameProps) => {
 
     return (
         <div className={classes.root}>
-            <CssBaseline />
             <Hidden xsUp implementation="js">
                 <Drawer
                     variant="temporary"
@@ -84,12 +85,67 @@ export const Frame = (props: FrameProps) => {
                             <div className={classes.toolbar} />
                             <NavigationList
                                 menus={props.menus ?? []}
-                                routePressed={routePressed} />
+                                routePressed={e => {
+                                    routePressed(e);
+                                }} />
                         </div>
                     </nav>
                 </Drawer>
             </Hidden>
-            <Hidden xsDown implementation="js">
+            <Hidden xsDown lgUp implementation="js">
+                <nav className={classes.mdDrawer}
+                >
+                    <Drawer
+                        classes={{
+                            paper: mobileOpen ? classes.mdDrawerPaperOpen : classes.mdDrawerPaperClose,
+                        }}
+                        variant={mobileOpen ? "temporary" : "persistent"}
+                        open
+                        onClose={() => setMobileOpen(false)}
+                    >
+                        <div style={{ width: drawerWidth }}>
+                            <IconButton
+                                color="inherit"
+                                aria-label="open drawer"
+                                onClick={handleDrawerToggle}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+
+                            <Box display="flex"
+                                alignItems="center"
+                                justifyContent={mobileOpen ? "center" : "start"}
+                                p={1}>
+                                {props.logo && props.logo(mobileOpen)}
+                            </Box>
+
+                            {/* Profile */}
+                            {/* <Box flex="1 1 auto" marginLeft="28px" width="calc(100% - 94px)">
+                                <Typography variant="caption" style={{ color: "rgb(168,168,168)" }} >
+                                    {mobileOpen ? t("管理者ツール") : ""}
+                                </Typography>
+                            </Box> */}
+
+                            <Box display="flex"
+                                alignItems="center"
+                                justifyContent="center"
+                                padding={mobileOpen ? "8px" : "0px"}
+                                mt={2}>
+                                {props.commandBox}
+                            </Box>
+
+                            {/* Navigation */}
+                            <NavigationList
+                                menus={props.menus ?? []}
+                                routePressed={e => {
+                                    setMobileOpen(false);
+                                    routePressed(e);
+                                }} />
+                        </div>
+                    </Drawer>
+                </nav>
+            </Hidden>
+            <Hidden mdDown implementation="js">
                 <nav className={classes.drawer}
                     style={{ width: mobileOpen ? drawerWidth : closeWidth }}
                     aria-label="mailbox folders">
@@ -117,11 +173,11 @@ export const Frame = (props: FrameProps) => {
                             </Box>
 
                             {/* Profile */}
-                            <Box flex="1 1 auto" marginLeft="28px" width="calc(100% - 94px)">
+                            {/* <Box flex="1 1 auto" marginLeft="28px" width="calc(100% - 94px)">
                                 <Typography variant="caption" style={{ color: "rgb(168,168,168)" }} >
                                     {mobileOpen ? t("管理者ツール") : ""}
                                 </Typography>
-                            </Box>
+                            </Box> */}
 
                             <Box display="flex"
                                 alignItems="center"
@@ -146,13 +202,6 @@ export const Frame = (props: FrameProps) => {
     );
 };
 
-export interface Route {
-    path: string;
-    name: string;
-    icon: React.ReactNode;
-    component: () => React.ReactNode;
-}
-
 type DrawerPropos = {
     menus: Route[];
     routePressed: (route: Route) => void | Promise<void>;
@@ -174,8 +223,11 @@ function NavigationList(props: DrawerPropos) {
 
     const routePressed = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, route: Route) => {
         props.routePressed(route);
-        setLastPressed(route.path);
     };
+
+    useEffect(() => {
+        setLastPressed(location.pathname);
+    }, [location.pathname]);
 
     useEffect(() => {
         if (currentElement) {
@@ -229,9 +281,9 @@ function NavigationList(props: DrawerPropos) {
                             ref={elem => isCurrentRoute(route.path) && setCurrentElement(elem)}
                             onClick={e => routePressed(e, route)}>
                             <ListItemIcon >
-                                {route.icon}
+                                {route.icon()}
                             </ListItemIcon>
-                            <ListItemText primary={route.name} />
+                            <ListItemText primary={route.title} />
                         </ListItem>
                     </Box>
                 ))}
@@ -246,55 +298,69 @@ function NavigationList(props: DrawerPropos) {
     );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-    root: {
-        display: "flex",
-        overflow: "hidden"
-    },
-    drawer: {
-        [theme.breakpoints.up("sm")]: {
-            width: drawerWidth,
-            flexShrink: 0,
+const useStyles = makeStyles(
+    (theme: Theme) => ({
+        root: {
+            display: "flex",
+            overflow: "hidden"
         },
-        transition: theme.transitions.create(["width"], {
-            easing: theme.transitions.easing.easeInOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    appBar: {
-        zIndex: 9999,
-    },
-    toolbar: {
-        marginRight: "12px",
-        marginLeft: "12px",
-        height: 60
-    },
-    drawerPaperOpen: {
-        overflow: "auto",
-        width: drawerWidth,
-        border: 0,
-        transition: theme.transitions.create(["width"], {
-            easing: theme.transitions.easing.easeInOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerPaperClose: {
-        overflow: "auto",
-        width: closeWidth,
-        border: 0,
-        transition: theme.transitions.create(["width"], {
-            easing: theme.transitions.easing.easeInOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(0),
-        width: `calc(100vw - ${drawerWidth}px)`,
-    },
-    mainContainer: {
-        height: "calc(100vh - 64px)",
-        overflow: "hidden"
-    }
-}),
+        drawer: {
+            [theme.breakpoints.up("sm")]: {
+                width: drawerWidth,
+                flexShrink: 0,
+            },
+            transition: theme.transitions.create(["width"], {
+                easing: theme.transitions.easing.easeInOut,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+        },
+        mdDrawer: {
+            width: "52px",
+        },
+        mdDrawerPaperOpen: {
+            overflow: "auto",
+            width: drawerWidth,
+            border: 0,
+        },
+        mdDrawerPaperClose: {
+            overflow: "auto",
+            width: "52px",
+            border: 0,
+        },
+        appBar: {
+            zIndex: 9999,
+        },
+        toolbar: {
+            marginRight: "12px",
+            marginLeft: "12px",
+            height: 60
+        },
+        drawerPaperOpen: {
+            overflow: "auto",
+            width: drawerWidth,
+            border: 0,
+            transition: theme.transitions.create(["width"], {
+                easing: theme.transitions.easing.easeInOut,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+        },
+        drawerPaperClose: {
+            overflow: "auto",
+            width: closeWidth,
+            border: 0,
+            transition: theme.transitions.create(["width"], {
+                easing: theme.transitions.easing.easeInOut,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+        },
+        content: {
+            flexGrow: 1,
+            padding: theme.spacing(0),
+            width: `calc(100vw - ${drawerWidth}px)`,
+        },
+        mainContainer: {
+            height: "calc(100vh - 64px)",
+            overflow: "hidden"
+        }
+    }),
 );

@@ -4,18 +4,20 @@
         "outDir": "./dist/",
         "sourceMap": true,
         "noImplicitAny": true,
-        "module": "commonjs",
+        "module": "ESNext",
         "target": "esnext",
         "jsx": "react",
+        "moduleResolution": "node",
+        "noResolve": false,
+        "esModuleInterop": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "baseUrl": "./src",
         "lib": [
             "dom",
             "es2015",
             "es2017"
         ],
-        "moduleResolution": "node",
-        "noResolve": false,
-        "esModuleInterop": true,
-        "baseUrl": "./src",
         "paths": {
             "*": [
                 "types/*",

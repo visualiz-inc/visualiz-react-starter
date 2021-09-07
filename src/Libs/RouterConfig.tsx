@@ -1,5 +1,6 @@
-import React, { forwardRef, ReactNode, ReactNodeArray, useState } from "react";
+import React from "react";
 import { Router, useLocation, navigate, Redirect } from "@reach/router";
+import loadable, { LoadableComponent } from "@loadable/component";
 
 export {
     Route,
@@ -48,23 +49,21 @@ type LazyComponent = Promise<{
 const AppRouterProvider = ({ config }: AppRouterProps) => {
     const { basepath, routes } = config;
     return (
-        <React.Suspense fallback={<div>...Loading</div>}>
-            <Router basepath={basepath} style={{height:"100%"}}>
-                {
-                    routes
-                        .map(route => <ProjectRouteLazy
-                            key={route.path}
-                            path={route.path}
-                            page={React.lazy(() => route.component())}
-                        />)
-                }
-            </Router >
-        </React.Suspense>
+        <Router basepath={basepath} style={{ height: "100%" }}>
+            {
+                routes
+                    .map(route => <ProjectRouteLazy
+                        key={route.path}
+                        path={route.path}
+                        page={loadable(() => route.component())}
+                    />)
+            }
+        </Router >
     );
 };
 
 interface PageLazyProps {
-    page: React.LazyExoticComponent<React.ComponentType<any>>;
+    page: LoadableComponent<any>;
     path: string;
 }
 

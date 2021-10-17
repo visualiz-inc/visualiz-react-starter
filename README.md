@@ -1,12 +1,6 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.com">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="80" />
-  </a>
-</p>
-
 # はじめに
 
-モダンなフロントエンドアプリおよびWebページを開発するためのな環境が構築済みのスターターセットです。
+静的サイトジェネレータであるGatsbyをベースにモダンなフロントエンドアプリおよびWebページを開発するためのな環境が構築済みのスターターセットです。
 使用した主な技術スタックを以下に記します。
 
 * Gatsby - Reactを利用して静的なWebページを生成する静的サイトジェネレータです。
@@ -17,13 +11,40 @@
 
 # インストール方法
 
-まずは[公式ページ](https://www.gatsbyjs.com/)からGatsby CLIをインストールしてください。
+まずは[Gatsby公式](https://www.gatsbyjs.com/)の[インストールページ](https://www.gatsbyjs.com/docs/reference/gatsby-cli/)からGatsby CLIをインストールしてください。
+
+ほとんどの場合以下のコマンドでインストールできると思います
+
+```
+npm install -g gatsby-cli
+```
 
 プロジェクトを作成したいディレクトリで以下のコマンドを実行するとプロジェクトのテンプレートができます。
 
 ```
 $ gatsby new [プロジェクト名] https://github.com/visualiz-inc/visualiz-react-starter.git
 ```
+
+# プリインストールライブラリ
+
+プリインストールされたライブラリです。
+可能な限りこちらを利用しましょう。
+
+| Package                   | Description                               |
+| ------------------------- | ----------------------------------------- |
+|                           |                                           |
+
+# VSCode拡張
+
+エディタにVSCodeを利用する場合は以下の拡張機能をインストールすることをおすすめします。
+
+| Package                   | Description                               |
+| ------------------------- | ----------------------------------------- |
+| ESLint                    | リアルタイムでESLintによる構文チェック      |
+| vscode-styled-components  | CSS in JS用のシンタックスハイライト         |
+| Markdown Preview Enhanced | Markdownのリアルタイムプレビュー            |
+| VS Code Counter           | ソースのステップ数などの統計を出力できる     |
+| Graph QL                  | GraphQL言語サポート                        |
 
 # プロジェクトディレクトリ構成
 
@@ -35,23 +56,33 @@ $ gatsby new [プロジェクト名] https://github.com/visualiz-inc/visualiz-re
 │  README.md 簡単な説明を記述します（このファイル）
 │  tsconfig.json TypeScriptの設定をします
 │
+├─static 静的コンテンツ
+|  |      このディレクトリの中身は静的コンテンツとして配信されます
+|  |
+|  | favicon.ico ファビコン
+|  | routes.json Azure Static Web Appsのルーティング設定
+|
+| 
 └─src
     ├─App クライアントサイドアプリケーション（SPA）
     │      index.tsx クライアントサイドアプリケーションのエントリーポイント
     │      theme.ts Material UI のテーマ設定を記述します
-    |      i18n.ts 多言語化を実現します
+    |      i18n.ts 多言語化リソースファイル
     │
     ├─Libs
     │  │  Frame.tsx ポータル画面のテンプレート（ヘッダー、サイドバー、メイン）
     │  │  
     │  └─Components 共通パーツ
     │
-    ├─pages 静的ページを入れます pages/sample/index.tsにはhttp://www.hoge.com/sampleのようにアクセスできます
-    │
-    |
-    └─Styles 共通スタイルを記述します
-          global.css 共通のスタイルシート
-          index.ts このファイルを各ページでインポートする
+    └─StaticPages 静的に生成するページ全般
+       │
+       ├─Endpoints ページ一覧 StaticPages/Endpoints/sample/index.tsにはhttp://www.hoge.com/sampleのようにアクセスできます
+       │           ここにjsxやtsx入れておくと自動的に静的ページとして登録されます
+       │           export defaultに指定したコンポーネントが自動的にエントリーポイントになります
+       |
+       ├─Styles   共通スタイル
+       |
+       └─Components Endpointsから参照される共通パーツ
 ```
 
 # 開発環境の起動
@@ -59,7 +90,7 @@ $ gatsby new [プロジェクト名] https://github.com/visualiz-inc/visualiz-re
 プロジェクトの作成ができたら以下のコマンドでパッケージ等の依存関係を解決しましょう。
 
 ```
-$ yarn 
+$ yarn install
 ```
 
 次に以下のコマンドで、localhostに開発用サーバーを起動することができます。
@@ -94,53 +125,62 @@ pages/aaa/bbb/ccc.tsx (https://example.com/aaa/bbb/ccc)
 pages/aaa/bbb/index.tsx (https://example.com/aaa/bbb)
 ```
 
-ページを表示させるために必要な最低限のルールは以下の通りです
-詳しくは[React公式](https://ja.reactjs.org/)や[TypeScript公式](https://www.typescriptlang.org/)を参照するか、「React 入門」などでググってみてください。
-
-ReactやJavaScript、TypeScriptがわからなくとも以下のテンプレートを記述すればあとはHTML＆CSSのように記述することができます。
-```<h1>```の部分からはHTMLとして記述できます。
-
+index.ts
 ```tsx
 import React from "react";
 export default () => {
-  return (
-    <>
-      <h1>Hello React !!!</h1>
-    </>
-  );
+    return (
+        <>
+            <h1>Hello React !!!</h1>
+        </>
+    );
 }
 ```
 
-ファイルの上部に```import "style.scss"```を追加するとスタイルシートを読み込めます
+上記の```index.ts```を表示するには
 
-```scss
-.title {
-  font-size: 30px;
-  color : #112233
-}
-```
+```StaticPages/Endpoints/index.ts```に配置してブラウザで```http://localhost:8000```にアクセスすると"Hello React !!!"のテキストが表示されます。
 
-#### 基本的には普通のHTMLと同じだが、```class```の指定のみ```className```としなければならないので注意！
-(これはJavaScriptにclassというキーワードがあるため)
+# HTMLからReactとTypeScript
 
-```tsx
-import React from "react";
-import "./style.scss"
+GatsbyはReactというライブラリをベースとしたフレームワークです。
+このパッケージはさらにTypeScriptを組み合わせて採用することでより生産性と安全性を高めています。
 
-export default () => {
-  return (
-    <>
-      <h1 className="title">Hello React !!!</h1>
-    </>
-  );
-}
-```
+* TypeScript
+  - 静的型付けによりJavaScriptをより安全に記述でき、生産性を向上させるためのプログラミング言語です。ソースはJavaScriptにコンパイルされ文法としてはJavaScript + 型アノテーションのようなイメージです。
+* React 
+  - ユーザインタフェース構築のためのJavaScriptライブラリである
 
-class以外であれば普通に指定できる
+jQueryではなくReactを利用するメリットは
 
-```html
-<h1 style="font-size:15px;"></h1>
-```
+* ボタン・タブ・リスト……UIの種別を問わず、一度定義すればそれを繰り返し使える
+  -> 同じものを何回も作らなくて良い
+* HTMLやCSSだけでサイトを作るのはかなり大変
+  ->「ログインしていたら」とか「商品を買い物かごに入れていたら」といった、任意の条件にあわせたインターフェースの変化は上手く表現できない
+  HTMLだけだったら「登録されているユーザー情報を100人分表示する」場面では100回繰り返して書く必要がある
+それ以外にも色々……
+  Reactなら上記の「条件の違い」や「繰り返し」も表現できる2
+  HTMLやCSSだけではできないことができるようになる
+  -> 効率の良いコードを書けるようになる
+
+[React公式](https://ja.reactjs.org/)
+[TypeScript公式](https://www.typescriptlang.org/)
+[Gatsby公式](https://www.gatsbyjs.com/)
+
+### デザイナー向けクイックReact概要
+
+[こちら](#quick-react)
+
+# スタイリングガイド
+
+Reactにおいてスタイリング方法は複数あります。
+このパッケージでは3通りの方法が選択できます。
+
+1. スタイルシートを使う
+2. Reactのソース内に記述する
+3. インラインスタイル
+
+### スタイルシートを使う
 
 読み込めるスタイルシートの種類は以下の通りです。
 
@@ -148,41 +188,158 @@ class以外であれば普通に指定できる
 * SCSS
 * SASS
 
-## Material UIとスタイリング
+### CSSの場合
 
-ページごとにスタイルシートを記述するよりも、よく利用するブロックごと共通パーツ（コンポーネント）化させたり、あらかじめそういった便利なパーツを含むライブラリを利用することで、一貫性のある美しいUIを実現できたり、生産性を高めることができます。
+```src/StaticPages/Styles/style.css```
+```css
+.foo {
+    font-size: 20px;
+    color: #f00;
+}
+```
 
-本プロジェクトはMateria UIを利用することで、Googleのマテリアルデザインを実現しつつ、より効率的なスタイリングを行うことを選びました。詳しくは公式ページを参照してください。
+```src/StaticPages/Endpoints/index.ts```
+```tsx
+import "../Styles/style.css";
 
-InputやButton、レイアウト組などは積極的に利用していってください。
+export default () => {
+  return (
+    <p className="foo">スタイリングの例</p>
+  )
+}
+```
 
-Material UIはJavaScript(TypeScript)のコード内でスタイルを記述する仕組みを提供します。
+### Reactのソース内に記述する
+
+CSS in JSとも呼ばれますが、Javascript内にスタイルを記述する方法です。
+
+CSS in JSライブラリとして、Emotionを採用しました。
+EmotionはReeact JavaScript(TypeScript)のコード内でスタイルを記述する仕組みを提供します。
 これによりcssよりも複雑なことを可能にしたり、管理をシンプルにすることができますので、こちらも積極的に利用してください。
+
+
+VScodeを利用している場合は以下の拡張をインストールすることでシンタックスハイライトが適用されます。
+
+```vscode-styled-components```
+
 詳しくは公式のスタイルドキュメントを参照。
 
-[Materia UI　公式ドキュメント](https://material-ui.com/ja/)
-[Materia UI スタイルガイド](https://material-ui.com/styles/basics/)
+[Emotion 公式](https://emotion.sh/docs/introduction/)
 
+例
+
+メディアクエリや疑似要素も中に記述できます
+
+```src/StaticPages/Endpoints/index.ts```
+```tsx
+import React from "react";
+import { css } from "@emotion/react";
+
+const foo = css`
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    &:after{
+      background: red;
+      width: 100%;
+      height: 100%;
+      content: '';
+    }
+    @media (min-width: 420px) {
+      font-size: 140px;
+    }
+`;
+
+export default () => {
+  return (
+    <div>
+      <p css={foo}>Foo</p>
+    </div>
+  )
+}
+```
+
+##### オブジェクト形式
+
+JavaScriptオブジェクト形式で指定する場合CSSのプロパティ名がキャメルケースになる点を注意
 
 ```tsx
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { css } from "@emotion/react";
 
-const useStyles = makeStyles({
-  test: {
-    // ここにスタイルルールを記述
-    border: 0,
-    borderRadius: 3,
-    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-    color: "#ffffff",
-    height: "48px",
-    padding: "0 30px",
-  },
+const foo = css({
+    padding: "28px",
+    display: "flex",
+    flexDirection: "column",
+    fontSize: "20px",
+    "&:after": {
+      width: "100%",
+      height: "100%"
+      content: "",
+    },
+    "@media (min-width: 420px)": {
+      fontSize: "14px",
+    }
 });
 
-export default function Hook() {
-  const classes = useStyles();
-  return <h1 className={classes.test}>Hello React !</h1>;
+export default () => {
+  return (
+    <div>
+      <p css={foo}>Foo</p>
+    </div>
+  )
+}
+```
+
+例
+| css            | js            |
+| -------------- | ------------- |
+| font-size      | fontSize      |
+| flex-direction | flexDirection |
+| font-family    | fontFamily    |
+
+
+### インラインスタイル
+
+こちらも上記と同じくCSSのプロパティ名がキャメルケースになる点を注意
+
+```tsx
+import React from "react";
+
+export default () => {
+    return (
+        <p style={{ 
+            fontSize: "20px",
+            color: "#f00",
+            lineHeight: 2, 
+        }}>
+            スタイリングの例
+        </p>
+    );
+};
+```
+
+# MUI - UIコンポーネントライブラリ
+
+ページごとにスタイルシートを記述するよりも、よく利用するブロックに分けて共通パーツ（コンポーネント）化させたり、あらかじめそういった便利なパーツを含むライブラリを利用することで、一貫性のある美しいUIを実現できたり、生産性を高めることができます。
+
+MUIは、Button、Grid layout、Inputなどのよく利用する機能を、Googleが公開している「マテリアルデザイン」というガイドラインに従ってデザインされたUIコンポーネントライブラリです。
+
+Materia UIを利用することで、美しいUIを実現しつつ、より効率的にUIを構築でき、生産性を高めることができます。
+テーマの機能により色に一貫性を持たせたり、ダークテーマ、ライトテーマ、その他独自のテーマを作成することもできます。
+その他生産性を高める豊富な機能が多数存在するので、積極的に利用していきましょう。
+
+詳しくは公式ページを参照してください。
+
+[Materia UI　公式ドキュメント](https://mui.com/)
+
+例
+```tsx
+import React from 'react';
+import Button from '@mui/material';
+
+const App = () => {
+  return <Button variant="contained">Hello World</Button>;
 }
 ```
 
@@ -228,5 +385,286 @@ export const ReactComponent = () => {
 
 ```
 
+# SPAとしてクライアントサイドルーティングを行う
 
+Gatsbyは静的サイトジェネレータですがクライアントサイドルーティングも併用することができます。
+これによりサイトの一部をSPA（Single Page Application）化することができます。
+
+以下の設定でサンプルを用意しています
+
+* エントリーポイント```src/StaticPages/pages/app/index.ts```
+* SPAプロジェクトルート```src/Apps```
+
+### ページ```StaticPages/Endpoints/app/index.tsx```または```StaticPages/Endpoints/app.tsx```の設定例
+
+##### gatsby-config.jsにパスを登録
+
+```js
+// クライアントサイドルーティングするパスを追加
+const clientRoutes = ["/app/*"];
+```
+
+##### ルーティング登録
+
+以下の場合は```https://[host]/app```と```https://[host]/app/counter```が登録されます。
+登録されたコンポーネントは自動でバンドル分割され、必要に応じて遅延ロードされるため初回でも比較的高速に描画することができます。
+
+```tsx
+import React from "react";
+import { RouterConfig } from "Libs/RouterConfig";
+
+export const routes: RouterConfig = {
+    // absolute path
+    basepath: "/app",
+    // default home page path
+    homepath: "/app",
+    routes: [
+        {
+            component: () => import("./Views/SpaHomePage"),
+            icon: () => <></>,
+            path: "/",
+            title: ""
+        },
+        {
+            component: () => import("./Views/CounterPage"),
+            icon: () => <></>,
+            path: "/counter",
+            title: ""
+        }
+    ]
+};
+```
+
+##### 表示
+
+```Libs/Routing/RouterConfig```を利用すると表示することができます。
+
+```tsx
+import React, { useState } from "react";
+import { useAppLocation, AppRouterProvider } from "Libs/Routing/RouterConfig";
+
+export default () => {
+    const location = useAppLocation();
+    return (
+      {/* Animation will be triggered when location.key changed. */}
+      <Grow key={location.key} in={true}>
+        {/* Routed contents */}
+        <AppRouterProvider config={routes} />
+      </Grow>
+    );
+};
+```
+
+### デプロイ先にAzure Static Web Appsを利用する場合
+
+Azure Static Web Appsを利用する場合は```static/routes.json```に以下のように設定する必要があります。
+
+```json
+{
+    "routes": [
+        {
+            "route": "/app/*",
+            "serve": "/app/index.html",
+            "statusCode": 200
+        }
+    ]
+}
+```
+
+#
+#
+#
+***
+
+<a id="quick-react"></a>
+# デザイナー向けReact概要
+
+JavaScriptやjQueryといった知識がなくともReactのHTMLの部分だけの利用であればReactを利用することは十分可能です。
+
+シンプルなコード例から紹介していきます。
+
+
+```import```や```const```や```export```は見慣れないかもしれません。
+しかし```return```以降は見覚えがあるでしょう。
+ほぼHTMLなんです。
+ReactのHTMLのことをJSX(TypeScript環境ではTSXと呼ぶこともある)といいます。
+
+```src/StaticPages/Endpoints/index.ts```
+```tsx
+import React from "react";
+
+export default () => {
+    return (
+        <div>
+            <h1>Hello React !!!</h1>
+            <p>This is React Application.</p>
+        </fiv>
+    );
+}
+```
+
+詳しくは後述しますがファイルの上部にスタイルシートへのパス```import "../Styles/style.scss"```を追加するとスタイルを読み込めます。
+
+```src/StaticPages/Styles/style.css```
+```css
+.title {
+  font-size: 30px;
+  color : #112233;
+}
+```
+
+```src/StaticPages/Endpoints/index.ts```
+```tsx
+import React from "react";
+import "./style.scss";
+
+export default () => {
+  return (
+    <div>
+      <h1 className="title">Hello React !!!</h1>
+      <p>This is React Application.</p>
+    </div>
+  );
+}
+```
+
+#### ```className```について
+
+##### 基本的には普通のHTMLと同じだが、```class```の指定は```className```としなければならないので注意！
+
+一部キーワードがHTMLとは違う名前になっているので注意が必要です。
+Reactの世界ではclassやforのというキーワードはCSSではない役割で使われているためこうなっています。
+既に使ってしまっているので似たような名前を使ってクラス名の指定を表現しているんですね。
+若干違和感を覚えるかもしれませんが、これは暗記するしかありません。
+
+| HTML  | React     |
+| ----- | --------- |
+| class | className |
+| for   | htmlFor   |
+
+class, forなど一部特殊なキーワード以外であればHTMLと同じように指定できる
+
+```html
+<h1 style="font-size:15px;"></h1>
+```
+
+### もう少し複雑な例
+
+この段階で微妙にHTMLと違うのは以下の2点のみ。
+
+```class```ではなく```className```と書かれている
+```img```タグの```src```や、```p```タグの中で```{}```を使って書かれている箇所がある（```{logo}```と```{userName}```）
+
+```tsx
+import logo from "./logo.svg";
+import "./App.css";
+
+const firstName = "John";
+const lastName = "Doe";
+const fullName = `${firstName} ${lastName}`;
+
+export default () => {
+  return (
+    <div className="App">
+      <p>
+        Hello, {fullName}
+      </p>
+    </div>
+  );
+}
+
+export default App;
+```
+
+#### {}の使用について
+
+HTMLを書いていて、{}が何かの役割を担うことはありません。
+ReactのHTML(JSX)で{}が出てきたら「このカッコの中ではJavaScriptが動いているんだな」と捉えてください。
+
+```tsx
+const firstName = "John"
+const lastName = "Doe"
+const fullName = `${firstName} ${lastName}`
+```
+
+こちらを日本語で解釈するとこのような感じです。
+
+```
+Johnという文字列をfirstNameという定数にいれます
+Doeという文字列をlastNameという定数にいれます
+firstNameとlastNameを合体(フォーマット)させた文字列をfullNameという定数にいれます
+```
+
+そしてfullNameは実際にはこのように使われています。
+
+```tsx
+<p>
+  Hello, {fullName}
+</p>
+```
+
+コードではこう書かれていますが、実際の結果を見るとHello, John Doeと表示されています。
+
+### コンテンツのロード
+
+画像やオーディオ等のコンテンツの埋め込み方法も複数存在します。
+
+1. コンテンツのURLを指定する方法
+2. Reactのソースに埋め込む方法
+
+#### コンテンツのURLを指定する方法
+
+こちらは普通のHTMLと同じです。
+このパッケージの設定では```static```ディレクトリ配下に置いたファイルを指定することができます。
+
+
+```static/images/logo.png```を指定する場合。
+```tsx
+import React from "react";
+
+export default () => {
+  return (
+    <div>
+        <h1  className="title">Hello React !!!</h1>
+        <img 
+            src="https://localhost:8000/images/logo.jpg" 
+            className="App-logo" 
+            alt="logo" 
+        />
+    </div>
+  );
+```
+
+#### Reactのソースに埋め込む方法
+
+画像ファイルを```import```することで、JavaScript変数に文字列として読み込めます。
+
+```src/StaticPages/Assets/Images/logo.png```を指定する場合
+```tsx
+import React from "react";
+import logo from "../Assets/Images/logo.png";
+
+// Base64エンコードされたコンテンツデータ
+// コンソールの出力結果を確認してみましょう
+console.log(logo);
+
+export default () => {
+    return (
+        <div>
+            <h1  className="title">Hello React !!!</h1>
+            <img 
+                src={logo}
+                className="App-logo" 
+                alt="logo" 
+            />
+        </div>
+    );
+};
+```
+
+### 詳しくは入門書やサイトで
+
+[デザイナーでも分かる範囲のReact、その書き方と学び方](https://qiita.com/xrxoxcxox/items/91f84c6bc3e03deb5853)
+[React公式](https://ja.reactjs.org/)
+[TypeScript公式](https://www.typescriptlang.org/)
 

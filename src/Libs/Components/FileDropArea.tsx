@@ -7,8 +7,8 @@ import {
     Typography,
     CircularProgress,
     useTheme
-} from "@material-ui/core";
-import { CloudUploadOutlined } from "@material-ui/icons";
+} from "@mui/material";
+import { CloudUploadOutlined } from "@mui/icons-material";
 
 interface FileDropArea {
     onChange?: (path: File) => void;
@@ -171,7 +171,7 @@ export function FileDropArea(props: FileDropArea) {
 }
 
 const useStyles = makeStyles(
-    theme => ({
+    (theme: any) => ({
         "fileContainer": {
             position: "relative",
             display: "flex",
@@ -198,4 +198,4 @@ const useStyles = makeStyles(
             }
         }
     })
-);
+) as any;

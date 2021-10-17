@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
+import { makeStyles, useTheme, Theme } from "@mui/material/styles";
 import { fromEvent } from "rxjs";
 import { pairwise, map } from "rxjs/operators";
-import MenuIcon from "@material-ui/icons/Menu";
+import { Menu as MenuIcon } from "@mui/icons-material";
 import {
     Box,
     ListItemText,
@@ -13,10 +13,10 @@ import {
     Typography,
     Hidden,
     Drawer,
-} from "@material-ui/core";
+} from "@mui/material";
 import { useLocation } from "@reach/router";
 import { useTranslation } from "react-i18next";
-import { Route } from "./RouterConfig";
+import { Route } from "./Routing/RouterConfig";
 
 const closeWidth = 52;
 const drawerWidth = 320;
@@ -31,20 +31,21 @@ interface FrameProps {
     children: React.ReactNode;
 }
 
+const _window: Window | any = typeof window === "undefined" ? {} : window;
+
 export const Frame = (props: FrameProps) => {
     const classes = useStyles();
-    const [mobileOpen, setMobileOpen] = React.useState(AUTO_CLOSE_WIDTH <= window.innerWidth);
+    const [mobileOpen, setMobileOpen] = React.useState(AUTO_CLOSE_WIDTH <= _window.innerWidth);
     const [t] = useTranslation();
 
     const theme = useTheme();
-
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
-    fromEvent(window, "resize").pipe(
-        map(() => window.innerWidth),
+    typeof window !== "undefined" && fromEvent(_window, "resize").pipe(
+        map(() => _window.innerWidth),
         pairwise(),
     ).subscribe(e => {
         const [beforeWidth, currentWidth] = e;
@@ -79,8 +80,7 @@ export const Frame = (props: FrameProps) => {
                         keepMounted: true, // Better open performance on mobile.
                     }}
                 >
-                    <nav className={classes.drawer}
-                        aria-label="mailbox folders">
+                    <nav className={classes.drawer}>
                         <div style={{ width: drawerWidth }}>
                             <div className={classes.toolbar} />
                             <NavigationList
@@ -275,10 +275,10 @@ function NavigationList(props: DrawerPropos) {
                         margin="auto"
                         height="44px"
                         display="flex"
-                        bgcolor={isCurrentRoute(route.path) ? "rgba(127,127,127,0.08)" : ""}
+                        bgcolor={isCurrentRoute(route.to) ? "rgba(127,127,127,0.08)" : ""}
                     >
                         <ListItem button
-                            ref={elem => isCurrentRoute(route.path) && setCurrentElement(elem)}
+                            ref={elem => isCurrentRoute(route.to) && setCurrentElement(elem)}
                             onClick={e => routePressed(e, route)}>
                             <ListItemIcon >
                                 {route.icon()}
@@ -363,4 +363,4 @@ const useStyles = makeStyles(
             overflow: "hidden"
         }
     }),
-);
+) as any;

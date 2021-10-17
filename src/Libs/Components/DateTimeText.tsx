@@ -1,6 +1,6 @@
 import React from "react";
-import { Variant } from "@material-ui/core/styles/createTypography";
-import { PropTypes, Typography } from "@material-ui/core";
+import { Variant } from "@mui/material/styles/createTypography";
+import { PropTypes, Typography } from "@mui/material";
 
 interface DateTimeTextProps {
     date?: Date;

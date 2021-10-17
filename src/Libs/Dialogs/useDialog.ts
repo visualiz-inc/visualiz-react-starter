@@ -1,4 +1,4 @@
-import { DialogProps } from "@material-ui/core";
+import { DialogProps } from "@mui/material";
 import { useContext } from "react";
 import { DialogContext, DialogOption } from "./DialogProvider";
 
@@ -8,6 +8,7 @@ type DialogRenderer<TResult>
 interface DialogHandler {
     showAsync: <TResult = any>(renderer: DialogRenderer<TResult>, options?: DialogOption)
         => Promise<TResult>;
+    close: () => void;
     setOption: (option: DialogOption) => void;
 }
 
@@ -26,17 +27,20 @@ export const useDialog = (): DialogHandler => {
             return new Promise<TResult>(
                 resolve => {
                     const onClose = (result: TResult) => {
-                        context.close();
+                        context.closeDialog();
                         resolve(result);
                     };
 
                     const ctx = renderer(onClose);
-                    context.open(ctx);
+                    context.openDialog(ctx);
                 }
             );
         },
+        close: () => {
+            context.closeDialog();
+        },
         setOption: (option: DialogOption) => {
-            context.setOption(option);
+            context.setDialogOption(option);
         }
     };
 };

@@ -23,7 +23,8 @@
                 "types/*",
                 "*"
             ]
-        }
+        },
+        "jsxImportSource": "@emotion/react"
     },
     "include": [
         "./src/**/*"

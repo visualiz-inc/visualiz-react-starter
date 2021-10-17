@@ -1,6 +1,6 @@
 import React from "react";
-import { Paper, InputBase, IconButton } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
+import { Paper, InputBase, IconButton } from "@mui/material";
+import { Search } from "@mui/icons-material";
 
 interface SearchBoxProps {
     placeholder?: string;

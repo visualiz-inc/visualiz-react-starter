@@ -3,8 +3,17 @@ import {
     makeStyles,
     useTheme,
     Box, Grow
-} from "@material-ui/core";
+} from "@mui/material";
 import { Flipper, Flipped } from "react-flip-toolkit";
+import jsx, { css } from "@emotion/react";
+
+const containerStyle = css`
+    width: "100%";
+    max-width: "100%";
+    display: "flex";
+    flex-wrap: "wrap";
+    align-content: "start";
+`;
 
 interface ItemsWrapGridProps<T extends { id: string }> {
     itemSlot: (item: T) => JSX.Element;
@@ -16,8 +25,7 @@ interface ItemsWrapGridProps<T extends { id: string }> {
 /**
  * Wrap items grid.
  */
-export function ItemsWrapGrid<T extends { id: string }>(props: ItemsWrapGridProps<T>) {
-    const classes = useStyles();
+export const ItemsWrapGrid = <T extends { id: string }>(props: ItemsWrapGridProps<T>) => {
     const { itemSlot, items } = props;
     const container = useRef<HTMLDivElement | null>(null);
     const [itemWidth, setItemWidth] = useState("100%");
@@ -45,10 +53,10 @@ export function ItemsWrapGrid<T extends { id: string }>(props: ItemsWrapGridProp
     }
 
     return (
-        <div className={classes.container} ref={container}>
+        <div css={containerStyle} ref={container}>
             <Flipper
                 flipKey={`${items.length}_${itemWidth}`}
-                className={classes.container}
+                css={containerStyle}
             >
                 {items.map(
                     (post, i) => (
@@ -66,14 +74,4 @@ export function ItemsWrapGrid<T extends { id: string }>(props: ItemsWrapGridProp
             </Flipper>
         </div >
     );
-}
-
-const useStyles = makeStyles({
-    container: {
-        width: "100%",
-        maxWidth: "100%",
-        display: "flex",
-        flexWrap: "wrap",
-        alignContent: "start"
-    },
-});
+};

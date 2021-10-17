@@ -1,6 +1,6 @@
 import React from "react";
-import { Typography, PropTypes } from "@material-ui/core";
-import { Variant } from "@material-ui/core/styles/createTypography";
+import { Typography, PropTypes } from "@mui/material";
+import { Variant } from "@mui/material/styles/createTypography";
 
 interface WrappedTextBlockProps {
     row: number;

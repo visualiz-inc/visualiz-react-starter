@@ -6,5 +6,4 @@ export * from "./ItemsWrapGrid";
 export * from "./FileDropArea";
 export * from "./Spacer";
 export * from "./ColorPalette";
-export * from "./messageAsync";
 export * from "./ValidationTextField";

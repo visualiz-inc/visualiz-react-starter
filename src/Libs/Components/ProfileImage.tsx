@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
     IconButton
-} from "@material-ui/core";
+} from "@mui/material";
 
 interface ProfileImageProp {
     src: string;

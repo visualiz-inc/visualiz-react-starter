@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles, Checkbox, useTheme } from "@material-ui/core";
+import { makeStyles, Checkbox, useTheme } from "@mui/material";
 
 interface PhotoGridViewProps {
     images: string[];
@@ -176,4 +176,4 @@ const useStyle = makeStyles(() => ({
         transition: "transform 0.4s",
         minWidth: "100%"
     }
-}));
+})) as any;

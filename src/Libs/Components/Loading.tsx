@@ -1,8 +1,10 @@
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress } from "@mui/material";
+import { css } from "@mui/styled-engine";
+import { Box } from "@mui/system";
 import React from "react";
 
 export const Loading = () => {
-    return <div style={{
+    return <Box sx={{
         position: "fixed",
         top: "0",
         left: "0",
@@ -14,7 +16,7 @@ export const Loading = () => {
         alignItems: "center",
         background: "rgba(0,0,0,0.64)"
     }}>
-        <CircularProgress style={{
+        <CircularProgress sx={{
             position: "absolute",
             top: "0",
             left: "0",
@@ -22,5 +24,5 @@ export const Loading = () => {
             bottom: "0",
             margin: "auto"
         }} size={100} />
-    </div>;
+    </Box>;
 };

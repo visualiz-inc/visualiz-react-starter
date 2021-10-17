@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@mui/material";
 import React, { useEffect } from "react";
 
 interface ColorPaletteProps {
@@ -77,4 +77,4 @@ const useStyles = makeStyles({
             filter: "brightness(0.9 )"
         }
     }
-});
+}) as any;

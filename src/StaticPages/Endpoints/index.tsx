@@ -13,7 +13,6 @@ const box = css`
     padding: 12px;
 `;
 
-
 const bar = css({
     padding: "28px",
     display: "flex",

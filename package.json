@@ -9,7 +9,8 @@
         "start": "gatsby develop --https",
         "test": "echo \"Error: no test specified\" && exit 1",
         "serve": "gatsby serve",
-        "lint": "eslint src/**/*.{ts,tsx,js,jsx}"
+        "lint": "eslint src/**/*.{ts,tsx,js,jsx}",
+        "deploy": "gatsby build --prefix-paths && gh-pages -d public -b demo"
     },
     "dependencies": {
         "@emotion/react": "^11.4.1",
@@ -24,6 +25,7 @@
         "@types/react": "^17.0.19",
         "@types/react-dom": "17.0.9",
         "@types/react-helmet": "^6.1.4",
+        "clsx": "^1.1.1",
         "gatsby": "^3.7.1",
         "gatsby-link": "^3.7.1",
         "gatsby-plugin-create-client-paths": "^3.12.0",
@@ -60,6 +62,8 @@
         "eslint-webpack-plugin": "^3.0.1",
         "gatsby-plugin-eslint": "^4.0.0",
         "gatsby-plugin-sass": "^4.12.0",
+        "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.25",
+        "gh-pages": "^3.2.3",
         "prettier": "^2.3.1",
         "sass": "^1.43.2",
         "typescript": "^4.4.2"

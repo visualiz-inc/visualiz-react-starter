@@ -18,6 +18,7 @@ module.exports = {
     `gatsby-plugin-typescript`,
     `gatsby-plugin-material-ui`,
     `gatsby-plugin-sass`,
+    "gatsby-plugin-webpack-bundle-analyser-v2",
     {
       resolve: `gatsby-plugin-emotion`,
       options: {

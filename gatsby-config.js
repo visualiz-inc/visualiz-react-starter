@@ -18,7 +18,10 @@ module.exports = {
         `gatsby-plugin-typescript`,
         `gatsby-plugin-material-ui`,
         `gatsby-plugin-sass`,
-        "gatsby-plugin-webpack-bundle-analyser-v2",
+        `gatsby-plugin-webpack-bundle-analyser-v2`,
+        `gatsby-plugin-image`,
+        `gatsby-plugin-sharp`,
+        `gatsby-transformer-sharp`,
         {
             resolve: `gatsby-plugin-emotion`,
             options: {
@@ -30,45 +33,23 @@ module.exports = {
                 cssPropOptimization: true,
             }
         },
-        plugins: [
-            `gatsby-plugin-resolve-src`,
-            `gatsby-plugin-react-helmet`,
-            `gatsby-plugin-typescript`,
-            `gatsby-plugin-material-ui`,
-            `gatsby-plugin-sass`,
-            `gatsby-plugin-webpack-bundle-analyser-v2`,
-            `gatsby-plugin-image`,
-            `gatsby-plugin-sharp`,
-            `gatsby-transformer-sharp`,
-            {
-                resolve: `gatsby-plugin-emotion`,
-                options: {
-                    // Accepts the following options, all of which are defined by `@emotion/babel-plugin` plugin.
-                    // The values for each key in this example are the defaults the plugin uses.
-                    sourceMap: true,
-                    autoLabel: "dev-only",
-                    labelFormat: `[local]`,
-                    cssPropOptimization: true,
-                }
+        {
+            resolve: `gatsby-plugin-create-client-paths`,
+            options: { prefixes: [...clientRoutes] },
+        },
+        {
+            resolve: "gatsby-plugin-eslint",
+            options: {
+                stages: ["develop"],
+                extensions: ["js", "jsx", "ts", "tsx"],
+                exclude: ["node_modules", ".cache", "public"],
             },
-            {
-                resolve: `gatsby-plugin-create-client-paths`,
-                options: { prefixes: [...clientRoutes] },
+        },
+        {
+            resolve: `gatsby-plugin-page-creator`,
+            options: {
+                path: `${__dirname}/src/StaticPages/Endpoints`,
             },
-            {
-                resolve: "gatsby-plugin-eslint",
-                options: {
-                    stages: ["develop"],
-                    extensions: ["js", "jsx", "ts", "tsx"],
-                    exclude: ["node_modules", ".cache", "public"],
-                },
-            },
-            {
-                resolve: `gatsby-plugin-page-creator`,
-                options: {
-                    path: `${__dirname}/src/StaticPages/Endpoints`,
-                },
-            },
-        ],
+        },
     ],
 };

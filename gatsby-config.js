@@ -10,23 +10,16 @@ const clientRoutes = ["/app/*"];
 module.exports = {
     // pathPrefix: `/path`, github pagesなどを利用する場合はこちらにルートパスを指定
     siteMetadata: {
-        title: "",
+        title: "株式会社VISUALIZ 公式ページ",
+        siteUrl: `https://visualiz.jp`,
     },
     plugins: [
-        `gatsby-plugin-resolve-src`,
-        `gatsby-plugin-react-helmet`,
-        `gatsby-plugin-typescript`,
-        `gatsby-plugin-material-ui`,
-        `gatsby-plugin-sass`,
-        `gatsby-plugin-webpack-bundle-analyser-v2`,
-        `gatsby-plugin-image`,
-        `gatsby-plugin-sharp`,
-        `gatsby-transformer-sharp`,
+        // SEO
+        `gatsby-plugin-sitemap`,
+        `gatsby-plugin-robots-txt`,
         {
             resolve: `gatsby-plugin-emotion`,
             options: {
-                // Accepts the following options, all of which are defined by `@emotion/babel-plugin` plugin.
-                // The values for each key in this example are the defaults the plugin uses.
                 sourceMap: true,
                 autoLabel: "dev-only",
                 labelFormat: `[local]`,
@@ -34,9 +27,29 @@ module.exports = {
             }
         },
         {
-            resolve: `gatsby-plugin-create-client-paths`,
-            options: { prefixes: [...clientRoutes] },
+            resolve: `gatsby-plugin-google-analytics`,
+            options: {
+                trackingId: "{ID}",
+            },
         },
+        // PWA
+        {
+            resolve: `gatsby-plugin-manifest`,
+            options: {
+                name: `React Template`,
+                short_name: `React Template`,
+                description: `React starter template for SPA.`,
+                start_url: `/app`,
+                background_color: `#ffffff`,
+                theme_color: `#0ba7bf`,
+                display: `standalone`,
+                icon: `static/icon.png`,
+            },
+        },
+        `gatsby-plugin-offline`,
+        // Build
+        `gatsby-plugin-webpack-bundle-analyser-v2`,
+        `gatsby-plugin-resolve-src`,
         {
             resolve: "gatsby-plugin-eslint",
             options: {
@@ -45,6 +58,37 @@ module.exports = {
                 exclude: ["node_modules", ".cache", "public"],
             },
         },
+        `gatsby-plugin-sass`,
+        `gatsby-plugin-react-helmet`,
+        `gatsby-plugin-typescript`,
+        {
+            resolve: `gatsby-plugin-create-client-paths`,
+            options: { prefixes: [...clientRoutes] },
+        },
+        // Material UI
+        `gatsby-plugin-material-ui`,
+        // Images
+        `gatsby-plugin-image`,
+        `gatsby-transformer-sharp`,
+        {
+            resolve: `gatsby-plugin-sharp`,
+            options: {
+                defaults: {
+                    formats: [`auto`, `webp`],
+                    quality: 50,
+                    breakpoints: [600, 900, 1200, 1536],
+                    backgroundColor: `transparent`,
+                }
+            }
+        },
+        {
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                name: `images`,
+                path: `${__dirname}/static/images/`,
+            },
+        },
+        // Page resolve
         {
             resolve: `gatsby-plugin-page-creator`,
             options: {

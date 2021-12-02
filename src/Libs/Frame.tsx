@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { makeStyles, useTheme, Theme } from "@mui/material/styles";
+import { useTheme, Theme } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import { fromEvent } from "rxjs";
 import { pairwise, map } from "rxjs/operators";
 import { Menu as MenuIcon } from "@mui/icons-material";

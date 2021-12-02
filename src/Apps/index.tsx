@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CssBaseline, ThemeProvider, Grow } from "@mui/material";
 import { lightTheme } from "./theme";
 import { useTranslation } from "react-i18next";
-import { AppRouterProvider, useAppLocation } from "Libs/RouterConfig";
+import { AppRouterProvider, useAppLocation } from "Libs/Routing/RouterConfig";
 import "./i18n";
 import { routes } from "Apps/routes";
 import { css } from "@emotion/react";

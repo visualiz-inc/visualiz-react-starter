@@ -1,5 +1,5 @@
 import React from "react";
-import { RouterConfig } from "Libs/RouterConfig";
+import { RouterConfig } from "Libs/Routing/RouterConfig";
 
 export const routes: RouterConfig = {
     // absolute path
@@ -11,13 +11,15 @@ export const routes: RouterConfig = {
             component: () => import("./Views/SpaHomePage"),
             icon: () => <></>,
             path: "/",
-            title: ""
+            to: "/",
+            title: "ホーム"
         },
         {
             component: () => import("./Views/CounterPage"),
             icon: () => <></>,
             path: "/counter",
-            title: ""
+            to: "/counter",
+            title: "カウンター"
         }
     ]
 };

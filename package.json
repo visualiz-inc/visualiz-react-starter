@@ -62,7 +62,7 @@
         "@types/react-helmet": "^6.1.4",
         "@types/react-i18next": "^8.1.0",
         "@types/uuid": "^8.3.1",
-        "@typescript-eslint/eslint-plugin": "^5.2.0",
+        "@typescript-eslint/eslint-plugin": "^5.5.0",
         "@typescript-eslint/parser": "^5.2.0",
         "babel-plugin-transform-typescript-metadata": "^0.3.2",
         "babel-preset-gatsby": "^2.0.0",

@@ -30,16 +30,17 @@ $ gatsby new [プロジェクト名] https://github.com/visualiz-inc/visualiz-re
 プリインストールされたライブラリです。
 可能な限りこちらを利用しましょう。
 
-| Package                   | Description                                    |
-| ------------------------- | ---------------------------------------------- |
-| uuid                      | ユニークなUUIDの生成                            |
-| qs                        | URLのクエリユーティリティ                       |
-| @mui/*                    | Material Design のUIフレームワーク              |
-| rxjs                      | リアクティブプログラミングライブラリ             |
-| luxon                     | 日時のユーティリティ                            |
-| i18next                   | 多言語を実現                                   |
-| clsx                      | CSSのクラス名をReact用に結合してくれるライブラリ |
-| @emotion                  | CSS in JS ライブラリ                           |
+| Package                   | Description                                     |
+| ------------------------- | ----------------------------------------------- |
+| uuid                      | ユニークなUUIDの生成                             |
+| qs                        | URLのクエリパーサユーティリティ                   |
+| @mui/*                    | Material Design のUIフレームワーク               |
+| @emotion                  | CSS in JS ライブラリ                            |
+| rxjs                      | リアクティブプログラミングライブラリ              |
+| luxon                     | 日時のユーティリティ                             |
+| i18next                   | 多言語を実現                                    |
+| react-hook-form           | フォーム用ライブラリ                             |
+| yup                       | バリデーションライブラリ（react-hook-formと併用） |
 
 # VSCode拡張
 

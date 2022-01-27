@@ -5,7 +5,6 @@ import { Variant } from "@mui/material/styles/createTypography";
 interface WrappedTextBlockProps {
     row: number;
     children?: React.ReactNode;
-    align?: PropTypes.Alignment;
     color?:
     | "initial"
     | "inherit"

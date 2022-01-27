@@ -6,6 +6,7 @@ export const Marker = (props: {
     scrollEndOffset?: number | string;
     container?: HTMLElement;
     target?: HTMLElement;
+    color: string;
 }) => {
     const { container, scrollEndOffset, scrollStartOffset, target } = props;
 
@@ -18,13 +19,13 @@ export const Marker = (props: {
 
     return <>
         <div style={{
-            borderBottom: "2px solid #f54646",
+            borderBottom: `2px solid ${props.color}`,
             top: `${(targetEndOffset ?? 0) - 20}px`,
             width: "100vw",
             position: "absolute",
             fontSize: "10px",
             paddingLeft: "8px",
-            zIndex: 99999999,
+            zIndex: 999999999,
             right: 0,
             transform: "translateX(80%)",
             textAlign: "left"
@@ -32,13 +33,13 @@ export const Marker = (props: {
             end
         </div>
         <div style={{
-            borderTop: "2px solid #0f8fe4",
+            borderTop: `2px solid ${props.color}}`,
             top: `${(targetStartOffset ?? 0)}px`,
             width: "100vw",
             position: "absolute",
             fontSize: "10px",
             paddingLeft: "8px",
-            zIndex: 99999999,
+            zIndex: 999999999,
             right: 0,
             transform: "translateX(80%)",
             textAlign: "left"

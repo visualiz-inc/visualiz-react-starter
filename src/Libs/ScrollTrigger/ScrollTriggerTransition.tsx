@@ -1,7 +1,6 @@
 import { Interpolation, Theme } from "@emotion/react";
-import { CSSProperties } from "@mui/styles";
 import clsx from "clsx";
-import React from "react";
+import React, { CSSProperties } from "react";
 import { ScrollTrigger } from "./ScrollTrigger";
 
 interface AnimationStateStyle<T> {

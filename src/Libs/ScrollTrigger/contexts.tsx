@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
+import { FadeAndSlideScrollTriggerAnimation } from "StaticPages/Components/FadeAndSlideScriollTriggerAnimation";
 
 export interface ScrollContainerContext {
     scrollStartPosition?: number;
     scrollEndPosition?: number;
     rawElement?: HTMLDivElement;
-    debug?: boolean;
+    debug: boolean;
     getScrollHeight: () => number,
     scrollTo: (y: number) => void;
     scrollToBottom: () => void;
@@ -16,6 +17,7 @@ export const ScrollContext = React.createContext<ScrollContainerContext>({
     scrollTo: y => { },
     scrollToBottom: () => { },
     scrollDirection: "down",
+    debug: false,
 });
 
 export const useScrollContext = () => useContext(ScrollContext);

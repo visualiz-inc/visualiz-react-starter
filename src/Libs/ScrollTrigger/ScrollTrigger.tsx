@@ -1,9 +1,11 @@
 import { useScrollContext } from "./contexts";
 import { Marker } from "./debug";
 import { Transition, TransitionStatus } from 'react-transition-group';
-import React, { CSSProperties, ReactNode, useEffect, useState } from "react";
+import React, { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
 import { useScrollTrigger } from "./useScrollTrigger";
 import { css } from "@mui/styled-engine";
+
+const randomColor = ()=>"#" + Math.floor(Math.random() * 0xFFFFFF).toString(16);
 
 interface ScrollInfo {
     scrollDirection: "up" | "down";
@@ -31,6 +33,7 @@ export const ScrollTrigger = (props: ScrollTriggerProps) => {
         scrollEndOffset: props.scrollEndOffset,
     });
     const [mount, setMount] = useState(false);
+    const color = useRef(randomColor());
 
     useEffect(() => {
         if (!trigger.isOverlap && props.once) {
@@ -47,11 +50,16 @@ export const ScrollTrigger = (props: ScrollTriggerProps) => {
 
     return (
         <div
-            css={css({
-                position: "relative",
-            })}
+            css={context.debug ?
+                css({
+                    position: "relative",
+                    border: `3px solid ${color.current}`
+                }) :
+                css({
+                    position: "relative",
+                })}
             className={props.className}
-            style={{ ...props.style } as any}
+            style={props.style}
             ref={raw => {
                 if (raw) {
                     setMe(raw);
@@ -64,10 +72,9 @@ export const ScrollTrigger = (props: ScrollTriggerProps) => {
             >
                 {state => props.children(state, trigger)}
             </Transition>
-            {/* end */}
-
             {
                 context.debug && <Marker
+                    color={color.current}
                     scrollEndOffset={props.scrollEndOffset}
                     scrollStartOffset={props.scrollStartOffset}
                     target={me ?? undefined}

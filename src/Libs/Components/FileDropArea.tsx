@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
     Button,
     Box,
-    makeStyles,
+    css,
     Typography,
     CircularProgress,
     useTheme
@@ -19,13 +19,12 @@ interface FileDropArea {
 }
 
 export function FileDropArea(props: FileDropArea) {
-    const classes = useStyles();
+    const theme = useTheme();
+    const classes = useStyles(theme);
     const fileInput = useRef<HTMLInputElement | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const [isDragEntered, setIsDragEntered] = useState(false);
-    const theme = useTheme();
-
     function setImage(file?: File) {
         if (!file) {
             return;
@@ -64,7 +63,7 @@ export function FileDropArea(props: FileDropArea) {
                 {
                     !props.image ?
                         <div
-                            className={classes.fileContainer}
+                            css={classes.fileContainer}
                             onDragOver={e => {
                                 e.preventDefault();
                                 e.stopPropagation();
@@ -85,7 +84,7 @@ export function FileDropArea(props: FileDropArea) {
                             <CloudUploadOutlined
                                 color="primary"
                                 fontSize="large"
-                                className={isDragEntered ? classes.cloudIcon : ""}
+                                css={isDragEntered ? classes.cloudIcon : ""}
                             />
                             <Box mt={2} mx={2} display="flex" flexDirection="column" alignItems="center">
                                 <Typography
@@ -170,32 +169,30 @@ export function FileDropArea(props: FileDropArea) {
     );
 }
 
-const useStyles = makeStyles(
-    (theme: any) => ({
-        "fileContainer": {
-            position: "relative",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-            border: `4px dashed ${theme.palette.primary.main}`,
-            height: "280px",
-            width: "100%"
+const useStyles = (theme: any) => ({
+    "fileContainer": css({
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        border: `4px dashed ${theme.palette.primary.main}`,
+        height: "280px",
+        width: "100%"
+    }),
+    "cloudIcon": css({
+        animationName: "$cloudicon",
+        animationTimingFunction: "ease-in-out",
+        animationDuration: "0.8s",
+        animationDirection: "alternate",
+        animationIterationCount: "infinite"
+    }),
+    "@keyframes cloudicon": css({
+        "0%": {
+            transform: "translate(0, 0px)"
         },
-        "cloudIcon": {
-            animationName: "$cloudicon",
-            animationTimingFunction: "ease-in-out",
-            animationDuration: "0.8s",
-            animationDirection: "alternate",
-            animationIterationCount: "infinite"
-        },
-        "@keyframes cloudicon": {
-            "0%": {
-                transform: "translate(0, 0px)"
-            },
-            "100%": {
-                transform: "translate(0, -15px)"
-            }
+        "100%": {
+            transform: "translate(0, -15px)"
         }
     })
-) as any;
+});

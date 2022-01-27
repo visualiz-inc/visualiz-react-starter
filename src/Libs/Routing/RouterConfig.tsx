@@ -1,5 +1,5 @@
-import React, { ReactNode, useContext } from "react";
-import { Router, useLocation, navigate, Redirect } from "@reach/router";
+import React, { ReactNode, useContext, useEffect, CSSProperties, useState, useRef } from "react";
+import { Router, useLocation, navigate, Redirect, } from "@reach/router";
 import loadable from "@loadable/component";
 
 export {
@@ -8,7 +8,8 @@ export {
     RouterConfig,
     useAppLocation,
     useAppNavigate,
-    AppRouterProvider
+    AppRouterProvider,
+    AppRoutes
 };
 
 const useAppLocation = () => useLocation();
@@ -32,6 +33,7 @@ interface Route extends ChildRoute {
     icon: () => React.ReactNode;
     role?: number;
     children?: ChildRoute[];
+    group?: string;
 }
 
 interface RouterConfig {
@@ -41,7 +43,9 @@ interface RouterConfig {
 }
 
 interface AppRouterProps {
-    config: RouterConfig;
+    basepath: string;
+    homepath: string;
+    children?: ReactNode;
 }
 
 const getLoadableOrNode = (c: () => LazyComponent) => {
@@ -54,11 +58,39 @@ const getLoadableOrNode = (c: () => LazyComponent) => {
     }
 };
 
-const AppRouterProvider = ({ config }: AppRouterProps) => {
-    const { basepath, routes } = config;
-    return (
+const AppRouterProvider = (config: AppRouterProps) => {
+    const { basepath, homepath, children } = config;
+    const navigate = useAppNavigate();
+    // useEffect(() => {
+    //     navigate(homepath);
+    // }, []);
 
-        <Router basepath={basepath} style={{ height: "100%" }}>
+    return (
+        <Router
+            basepath={basepath}
+            style={{ height: "100%" }}
+        >
+            <Child path="/*" c={children} />
+        </Router >
+    );
+};
+
+const Child = ({ path, c }: { path: string, c: ReactNode }) => <>{c}</>;
+
+const AppRoutes = ({
+    routes,
+    className,
+    style
+}: {
+    routes: Route[],
+    className?: string,
+    style?: CSSProperties,
+}) => {
+    return (
+        <Router
+            className={className}
+            style={style}
+        >
             {
                 routes
                     .map(route =>
@@ -70,7 +102,7 @@ const AppRouterProvider = ({ config }: AppRouterProps) => {
                         />
                     )
             }
-        </Router >
+        </Router>
     );
 };
 
@@ -92,13 +124,11 @@ interface ChildRouterProps {
     additionalRoutes?: ChildRoute[];
 }
 
-const ChildRouter = (props: ChildRouterProps) => {
+export const ChildRouter = (props: ChildRouterProps) => {
     const context = useContext(RouterConfigContext);
     const children = context ?? [];
 
     const routes = [...children, ...(props.additionalRoutes ?? [])];
-
-    console.log(routes);
 
     if (!routes.length) {
         return <></>;
@@ -111,7 +141,7 @@ const ChildRouter = (props: ChildRouterProps) => {
                     <ChildRoute
                         key={route.path}
                         path={route.path}
-                        page={getLoadableOrNode(route.component)}
+                        page={route.component}
                     />
                 )}
             </Router>
@@ -125,9 +155,34 @@ interface ChildRouteProps {
 }
 
 const ChildRoute = (props: ChildRouteProps) => {
+    const [component, setComponent] = useState(null);
+    const isMount = useRef(true);
+
+    useEffect(() => {
+        const page = props.page;
+        if (typeof page === "function") {
+            const componentOrPromise = page();
+            if (componentOrPromise instanceof Promise) {
+                componentOrPromise.then(p => {
+                    const PPP = p?.default;
+                    if (isMount.current && PPP)
+                        setComponent(<PPP/> as any);
+                });
+            }
+            else {
+                setComponent(componentOrPromise);
+            }
+        }
+
+        return () => {
+            isMount.current = false;
+            setComponent(null);
+        };
+    }, []);
+
     return (
         <>
-            {props.page}
+            {component}
         </>
     );
 };

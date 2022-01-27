@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { CSSProperties } from "@mui/styles";
+import React, { CSSProperties, useContext, useEffect, useRef, useState } from "react";
 import { ScrollContainerContext, ScrollContext } from "./contexts";
 import { css } from "@mui/styled-engine";
 
@@ -18,6 +17,7 @@ export const ScrollContainer = (props: ScrollContainerProps) => {
         scrollTo: y => { },
         scrollToBottom: () => { },
         scrollDirection: "down",
+        debug: false,
     });
     const scrollY = useRef<number>(0);
 
@@ -44,12 +44,12 @@ export const ScrollContainer = (props: ScrollContainerProps) => {
 
     useEffect(
         () => {
-            setOption({
-                ...option,
+            setOption(state => ({
+                ...state,
                 scrollEndPosition: props.scrollEndPosition,
                 scrollStartPosition: props.scrollStartPosition,
-                debug: props.debug,
-            });
+                debug: props.debug ?? false,
+            }));
         },
         [
             props.scrollEndPosition,
@@ -63,18 +63,18 @@ export const ScrollContainer = (props: ScrollContainerProps) => {
         const update = () => {
             if (scrollY.current < (container?.scrollTop ?? 0)) {
                 if (option.scrollDirection !== "down") {
-                    setOption({
+                    setOption(option => ({
                         ...option,
                         scrollDirection: "down",
-                    });
+                    }));
                 }
             }
             else {
                 if (option.scrollDirection !== "up") {
-                    setOption({
+                    setOption(option => ({
                         ...option,
                         scrollDirection: "up",
-                    });
+                    }));
                 }
             }
             scrollY.current = (container?.scrollTop ?? 0);
@@ -130,7 +130,9 @@ export const ScrollContainer = (props: ScrollContainerProps) => {
                     {props.children}
                 </ScrollContext.Provider>
 
-                <Debug {...option} />
+                {option.debug && <Debug
+                    {...option}
+                />}
             </div >
         </div>
     );
@@ -141,7 +143,6 @@ const Debug = (props: Partial<ScrollContainerProps>) => {
         <>
             {/* debug */}
             {
-                props.debug &&
                 <div style={{
                     background: "rgba(255,255,255,0.6)",
                     zIndex: 9999999,

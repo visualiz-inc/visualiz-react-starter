@@ -10683,7 +10683,7 @@ regjsparser@^0.7.0:
   dependencies:
     jsesc "~0.5.0"
 
-relux.js@^2.0.7, relux.js@^2.0.8:
+relux.js@^2.0.7:
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/relux.js/-/relux.js-2.0.8.tgz#a26f7d6d390cce79f6ce6991d76b97330fe664f8"
   integrity sha512-2KiHF1/dY49OyxpzT6LL9LLk2FHlR2mjOhvFmcbYOOx18Be9GvLq3O6Z7Q4IHcmurhiwSWUMpZO0ek/gb4BfDQ==
@@ -11005,13 +11005,6 @@ rxjs@^6.6.0:
   integrity sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==
   dependencies:
     tslib "^1.9.0"
-
-rxjs@^7.3.0:
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.4.0.tgz#a12a44d7eebf016f5ff2441b87f28c9a51cebc68"
-  integrity sha512-7SQDi7xeTMCJpqViXh8gL/lebcwlp3d831F05+9B44A4B0WfsEwUQHR64gsH1kvJ+Ep/J9K2+n1hVl1CsGN23w==
-  dependencies:
-    tslib "~2.1.0"
 
 safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
@@ -12751,6 +12744,14 @@ vfile@^4.0.0:
     is-buffer "^2.0.0"
     unist-util-stringify-position "^2.0.0"
     vfile-message "^2.0.0"
+
+visualiz-react-flux@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/visualiz-react-flux/-/visualiz-react-flux-1.0.0.tgz#e81037f81399a98463647e503a27bcb7908b6b43"
+  integrity sha512-XtSRXxgUMkgNOXic5gkjDI8dPtbi5Og08TIDkh7Iow27RDjIEV9jog9ULtOxRciu0EPfr/eJs0d8Iqg6fNziww==
+  dependencies:
+    injection-js "^2.4.0"
+    reflect-metadata "^0.1.13"
 
 void-elements@3.1.0:
   version "3.1.0"

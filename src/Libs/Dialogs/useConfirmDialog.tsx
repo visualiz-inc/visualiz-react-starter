@@ -15,7 +15,7 @@ interface DialogHandler {
     setOption: (option: DialogOption) => void;
 }
 
-interface InputDialogOption extends DialogOption {
+interface ConfirmDialogOption extends DialogOption {
     hideCancel?: boolean;
     cancelText?: string;
     okText?: string;
@@ -23,21 +23,21 @@ interface InputDialogOption extends DialogOption {
     textFieldProps?: TextFieldProps;
 }
 
-export const useIntupDialog = () => {
+export const useConfirmDialog = () => {
     const { showAsync, close, setOption } = useDialog();
     const { t } = useTranslation();
 
-    const showMessageAsync = async (message: string, subMessage?: string | ReactNode, options?: InputDialogOption): Promise<string | null> => {
-        return await showAsync<string | null>(close => {
+    const confirmAsync = async (message: string, subMessage?: string | ReactNode, options?: ConfirmDialogOption): Promise<boolean> => {
+        return await showAsync<boolean>(close => {
             return React.createElement(() => {
                 const [text, setText] = useState(options?.defaultText ?? "");
 
                 const ok = () => {
-                    close(text);
+                    close(true);
                 };
 
                 const cancel = () => {
-                    close(null);
+                    close(false);
                 };
 
                 useEffect(() => {
@@ -58,13 +58,6 @@ export const useIntupDialog = () => {
                                         <Typography variant="body2">{subMessage}</Typography>
                                     </Box>
                                 }
-                                <Box p={3}>
-                                    <TextField
-                                        {...options?.textFieldProps}
-                                        onChange={e => setText(e.target.value)}
-                                        fullWidth={options?.fullWidth ?? true}
-                                    />
-                                </Box>
                             </Box>
                         </DialogContent>
                         <DialogActions>
@@ -79,5 +72,5 @@ export const useIntupDialog = () => {
         }, options);
     };
 
-    return { showMessageAsync, close, setOption };
+    return { confirmAsync, close, setOption };
 };

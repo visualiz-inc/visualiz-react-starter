@@ -1,6 +1,7 @@
 import React, { ReactNode, useContext, useEffect, CSSProperties, useState, useRef } from "react";
 import { Router, useLocation, navigate, Redirect, } from "@reach/router";
 import loadable from "@loadable/component";
+import { css } from "@emotion/react";
 
 export {
     Route,
@@ -122,6 +123,8 @@ const ProjectRouteLazy = (props: PageLazyProps) => {
 
 interface ChildRouterProps {
     additionalRoutes?: ChildRoute[];
+    className?: string;
+    style?: CSSProperties;
 }
 
 export const ChildRouter = (props: ChildRouterProps) => {
@@ -136,7 +139,10 @@ export const ChildRouter = (props: ChildRouterProps) => {
 
     return (
         <RouterConfigContext.Provider value={routes}>
-            <Router>
+            <Router
+                className={props.className}
+                style={props.style}
+            >
                 {routes.map(route =>
                     <ChildRoute
                         key={route.path}
@@ -166,7 +172,7 @@ const ChildRoute = (props: ChildRouteProps) => {
                 componentOrPromise.then(p => {
                     const PPP = p?.default;
                     if (isMount.current && PPP)
-                        setComponent(<PPP/> as any);
+                        setComponent(<PPP /> as any);
                 });
             }
             else {

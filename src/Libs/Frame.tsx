@@ -28,7 +28,7 @@ interface FrameProps {
     commandBox?: (isOpen: boolean) => React.ReactNode;
     toolbarContent?: () => React.ReactNode;
     children: React.ReactNode;
-    navigation: () => React.ReactNode;
+    navigation: (isOpen: boolean) => React.ReactNode;
 }
 
 const _window: Window | any = typeof window === "undefined" ? {} : window;
@@ -78,7 +78,7 @@ export const Frame = (props: FrameProps) => {
                         <div style={{ width: drawerWidth }}>
                             <div css={classes.toolbar} />
                             {/* Navigation */}
-                            {props.navigation()}
+                            {props.navigation(mobileOpen)}
                         </div>
                     </nav>
                 </Drawer>
@@ -127,7 +127,7 @@ export const Frame = (props: FrameProps) => {
                             </Box>
 
                             {/* Navigation */}
-                            {props.navigation()}
+                            {props.navigation(mobileOpen)}
                         </Box>
                     </Drawer>
                 </nav>
@@ -173,7 +173,7 @@ export const Frame = (props: FrameProps) => {
                                 {props.commandBox}
                             </Box>
                             {/* Navigation */}
-                            {props.navigation()}
+                            {props.navigation(mobileOpen)}
                         </Box>
                     </Drawer>
                 </nav>
@@ -189,6 +189,7 @@ type DrawerPropos = {
     menus: Route[];
     routePressed: (route: Route) => void | Promise<void>;
     selectedPath?: string;
+    isOpen?: boolean;
 }
 
 export const NavigationList = (props: DrawerPropos) => {
@@ -256,7 +257,7 @@ export const NavigationList = (props: DrawerPropos) => {
         return ({
             menu: menu,
             order: Number(sort),
-            spacer: !!spacer,
+            spacer: !!Number(spacer),
             routes: router[key]
         });
     });
@@ -279,6 +280,7 @@ export const NavigationList = (props: DrawerPropos) => {
                             <Typography
                                 style={{ marginLeft: "12px", marginBottom: "0", color: theme.palette.grey[500] }}
                                 variant="caption"
+                                pl={props.isOpen ? 3 : 0}
                             >
                                 {menu.menu}
                             </Typography>
@@ -296,10 +298,17 @@ export const NavigationList = (props: DrawerPropos) => {
                                                 button
                                                 ref={elem => isCurrentRoute(route.path) && setCurrentElement(elem)}
                                                 onClick={e => routePressed(e, route)}>
-                                                <ListItemIcon >
+                                                <Box
+                                                    display={"flex"}
+                                                    alignItems="center"
+                                                    color={theme.palette.grey[700]}
+                                                    pl={props.isOpen ? 3 : 0}
+                                                >
                                                     {route.icon()}
-                                                </ListItemIcon>
-                                                <ListItemText primary={route.title} />
+                                                    <Box sx={{ fontSize: "0.9rem" }} ml={5}>
+                                                        {route.title}
+                                                    </Box>
+                                                </Box>
                                             </ListItem>
                                         </Box>
                                     </React.Fragment>

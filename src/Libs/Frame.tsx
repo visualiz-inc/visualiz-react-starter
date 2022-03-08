@@ -20,7 +20,7 @@ import { Route } from "./Routing/RouterConfig";
 import { Spacer } from "./Components";
 
 const closeWidth = 60;
-const drawerWidth = 320;
+const drawerWidth = 360;
 const AUTO_CLOSE_WIDTH = 1280;
 
 interface FrameProps {
@@ -69,8 +69,9 @@ export const Frame = (props: FrameProps) => {
                     open={mobileOpen}
                     onClose={handleDrawerToggle}
                     css={classes.drawerPaperOpen}
+                    elevation={5}
                     ModalProps={{
-                        keepMounted: true, // Better open performance on mobile.
+                        keepMounted: true, // Better open performance on mobile.                        
                     }}
                 >
                     <nav css={classes.drawer}>
@@ -89,6 +90,7 @@ export const Frame = (props: FrameProps) => {
                         css={mobileOpen ? classes.mdDrawerPaperOpen : classes.mdDrawerPaperClose}
                         variant={mobileOpen ? "temporary" : "persistent"}
                         open
+                        elevation={5}
                         onClose={() => setMobileOpen(false)}
                     >
                         <Box sx={{ width: drawerWidth, height: "100%", display: "flex", flexDirection: "column" }}>
@@ -138,6 +140,7 @@ export const Frame = (props: FrameProps) => {
                         css={mobileOpen ? classes.drawerPaperOpen : classes.drawerPaperClose}
                         variant="permanent"
                         open
+                        elevation={5}
                     >
                         <Box sx={{ width: drawerWidth, height: "100%", display: "flex", flexDirection: "column" }}>
                             <Box>
@@ -215,13 +218,13 @@ export const NavigationList = (props: DrawerPropos) => {
 
     useEffect(() => {
         if (currentElement) {
-            moveCaretPosition(currentElement, 6);
+            moveCaretPosition(currentElement, 10);
         }
     });
 
     useEffect(() => {
         if (currentElement) {
-            moveCaretPosition(currentElement, 6);
+            moveCaretPosition(currentElement, 10);
         }
     }, []);
 
@@ -285,9 +288,9 @@ export const NavigationList = (props: DrawerPropos) => {
                                         <Box
                                             key={route.path}
                                             margin="auto"
-                                            height="44px"
+                                            height="58px"
                                             display="flex"
-                                            bgcolor={isCurrentRoute(route.path) ? "rgba(127,127,127,0.08)" : ""}
+                                            bgcolor={isCurrentRoute(route.path) ? "rgba(127,127,127,0.04)" : ""}
                                         >
                                             <ListItem
                                                 button
@@ -308,9 +311,10 @@ export const NavigationList = (props: DrawerPropos) => {
             </List>
             <div ref={rectElement} style={{
                 background: theme.palette.primary.main,
-                width: "6px",
-                transition: "all 0.3s",
-                position: "absolute"
+                width: "3px",
+                transition: "all 0.7s cubic-bezier(1, 0.37, 0.16, 0.97)",
+                position: "absolute",
+                borderRadius: "4px"
             }}></div>
         </div >
     );
@@ -368,7 +372,8 @@ const useStyles =
                     easing: theme.transitions.easing.easeInOut,
                     duration: theme.transitions.duration.enteringScreen,
                 }),
-                background: theme.palette.background.default
+                background: theme.palette.background.paper,
+                boxShadow: theme.shadows[5]
             }
         }),
         drawerPaperClose: css({
@@ -382,7 +387,8 @@ const useStyles =
                     easing: theme.transitions.easing.easeInOut,
                     duration: theme.transitions.duration.enteringScreen,
                 }),
-                background: theme.palette.background.default
+                background: theme.palette.background.paper,
+                boxShadow: theme.shadows[5]
             },
         }),
         content: css({
